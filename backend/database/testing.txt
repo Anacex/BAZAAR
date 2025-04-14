@@ -1,0 +1,51 @@
+postgres=# \c bazaar_inventory;
+You are now connected to database "bazaar_inventory" as user "postgres".
+bazaar_inventory=# \dt
+              List of relations
+ Schema |      Name       | Type  |  Owner
+--------+-----------------+-------+----------
+ public | products        | table | postgres
+ public | stock_movements | table | postgres
+ public | stores          | table | postgres
+ public | users           | table | postgres
+(4 rows)
+
+
+bazaar_inventory=# select * from users;
+ id |     username     | password | store_id |         created_at
+----+------------------+----------+----------+----------------------------
+  1 | admin_main       | $1234    |        1 | 2025-04-04 12:19:15.192029
+  2 | manager_downtown | $5678    |        2 | 2025-04-04 12:19:15.192029
+  3 | cashier_mall     | $9012    |        3 | 2025-04-04 12:19:15.192029
+(3 rows)
+
+
+bazaar_inventory=# select * from stores;
+ id |      name       | location
+----+-----------------+-----------
+  1 | Main Store      | Karachi
+  2 | Downtown Branch | Lahore
+  3 | Mall Outlet     | Islamabad
+(3 rows)
+
+
+bazaar_inventory=# select * from products;
+ id |     name      | description | price |         created_at
+----+---------------+-------------+-------+----------------------------
+  1 | Premium Rice  | 5kg bag     | 12.99 | 2025-04-04 12:19:15.188446
+  2 | Mineral Water | 1L bottle   |  0.75 | 2025-04-04 12:19:15.188446
+  3 | Energy Drink  | 250ml can   |  1.50 | 2025-04-04 12:19:15.188446
+(3 rows)
+
+
+bazaar_inventory=# select * from stock_movements;
+ id | store_id | product_id |   type   | quantity |         time_stamp
+----+----------+------------+----------+----------+----------------------------
+  1 |        1 |          1 | stock_in |      100 | 2025-04-04 12:19:15.200892
+  2 |        1 |          2 | stock_in |      200 | 2025-04-04 12:19:15.200892
+  3 |        2 |          1 | stock_in |       50 | 2025-04-04 12:19:15.200892
+  4 |        3 |          3 | stock_in |      150 | 2025-04-04 12:19:15.200892
+(4 rows)
+
+
+bazaar_inventory=#

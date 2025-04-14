@@ -1,0 +1,83 @@
+//Register New User (CMD)
+
+curl -X POST http://localhost:5000/api/auth/register ^  -H "Content-Type: application/json" ^  -d "{\"username\":\"store_manager\",\"password\":\"1234\"}"
+
+//Login & Get Token(CMD)
+
+curl -X POST http://localhost:5000/api/auth/login ^
+  -H "Content-Type: application/json" ^
+  -d "{\"username\":\"store_manager\",\"password\":\"1234\"}"
+
+**Save the returned token (look for "token":"eyJhbG..." in the response)**
+
+Product Management
+Add Product
+cmd
+Copy
+curl -X POST http://localhost:5000/api/stock/products ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"name\":\"Aashirvaad Atta\",\"description\":\"5kg pack\",\"price\":299.50}"
+List Products
+cmd
+Copy
+curl -X GET http://localhost:5000/api/stock/products ^
+  -H "Authorization: Bearer YOUR_TOKEN"
+3. Stock Operations
+Stock-In (Add Inventory)
+cmd
+Copy
+curl -X POST http://localhost:5000/api/stock/movements ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"product_id\":1,\"type\":\"stock_in\",\"quantity\":100}"
+Make a Sale
+cmd
+Copy
+curl -X POST http://localhost:5000/api/stock/movements ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"product_id\":1,\"type\":\"sale\",\"quantity\":5}"
+View Stock Movements
+cmd
+Copy
+curl -X GET http://localhost:5000/api/stock/movements ^
+  -H "Authorization: Bearer YOUR_TOKEN"
+4. Advanced Features
+Low-Stock Alert
+cmd
+Copy
+curl -X GET "http://localhost:5000/api/stock/products/low-stock?threshold=10" ^
+  -H "Authorization: Bearer YOUR_TOKEN"
+Update Stock Movement
+cmd
+Copy
+curl -X PUT http://localhost:5000/api/stock/movements/1 ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"quantity\":50}"
+Delete Stock Movement
+cmd
+Copy
+curl -X DELETE http://localhost:5000/api/stock/movements/1 ^
+  -H "Authorization: Bearer YOUR_TOKEN"
+5. Error Testing
+Invalid Token
+cmd
+Copy
+curl -X GET http://localhost:5000/api/stock/products ^
+  -H "Authorization: Bearer FAKE_TOKEN"
+Insufficient Stock
+cmd
+Copy
+curl -X POST http://localhost:5000/api/stock/movements ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"product_id\":1,\"type\":\"sale\",\"quantity\":1000}"
+Missing Fields
+cmd
+Copy
+curl -X POST http://localhost:5000/api/stock/products ^
+  -H "Authorization: Bearer YOUR_TOKEN" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"name\":\"Test Product\"}"
